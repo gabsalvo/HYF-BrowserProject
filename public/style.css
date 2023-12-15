@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+
 .centered {
   position: fixed;
   top: 50%;
@@ -19,6 +20,7 @@
 ul {
   list-style: none;
 }
+
 .answer-list {
   display: flex;
   flex-direction: column;
@@ -41,9 +43,4 @@ button {
 
 .green {
   background-color: green;
-}
-.question-count{
-  background-color: antiquewhite;
-  padding: 10px;
-  border: 1px solid #000;
 }
