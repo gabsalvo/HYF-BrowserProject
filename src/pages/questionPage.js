@@ -6,7 +6,6 @@ import {
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { quizData } from '../data.js';
-import { initResultPage } from './resultPage.js';
 
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -20,27 +19,58 @@ export const initQuestionPage = () => {
 
   const answersListElement = document.getElementById(ANSWERS_LIST_ID);
 
-  for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
-    const answerElement = createAnswerElement(key, answerText);
+  answersListElement.innerHTML = ''; // from old code
+  const answers = currentQuestion.answers; // from old code
+
+  // from old code
+  for (const [option, answer] of Object.entries(answers)) {
+    const answerElement = createAnswerElement(option, answer);
     answersListElement.appendChild(answerElement);
-  }
-  // check if it is the last quastion update the next quastion text to show result
- if(quizData.currentQuestionIndex === (quizData.questions.length - 1)){
+    answerElement.addEventListener('click', (e) => {
+      const selectedOption = e.target.innerText.split(': ')[0];
+      selectAnswer(quizData.currentQuestionIndex, selectedOption);
+    });
+  };
+
   const quizBtn = document.getElementById(NEXT_QUESTION_BUTTON_ID);
-    quizBtn.innerHTML = `Show Result`;
- }
-  document
-    .getElementById(NEXT_QUESTION_BUTTON_ID)
-    .addEventListener('click', nextQuestion);
+  quizBtn.addEventListener('click', nextQuestion);
+};
+
+// USER CAN SELECT AN ANSWER PER QUESTION
+const selectAnswer = (questionIndex, selectedOption) => {
+  // updates selected answer in quizData. 'questionIndex' identifies the specific question in array
+  quizData.questions[questionIndex].selected = selectedOption;
+
+  // selects all <li> elements within '.answer-list' class. It then iterates over all li's and calls showCorrectAnswer function for each of them
+  document.querySelectorAll(`.answer-list li`).forEach((item) => {
+    showCorrectAnswer(item);
+  });
+};
+
+// USER CAN SEE CORRECT ANSWER WHEN SELECTING WRONG ANSWER
+const showCorrectAnswer = (item) => {
+  const currentQuestion = quizData.questions[quizData.currentQuestionIndex]; // retrieves current question by its index
+  const correctAnswer = currentQuestion.correct;
+  const selectedAnswer = currentQuestion.selected;
+  const choice = item.innerText.split(': ')[0]; // takes user's choice from item param & splits text into array of substrings then selects first element at index 0
+  let alreadyAnswered = false;
+
+  if (selectedAnswer != null && selectedAnswer.length > 0 && choice == correctAnswer) {
+    item.className = 'green'; 
+    alreadyAnswered = true;
+  }
+  
+  if (selectedAnswer === choice && selectedAnswer !== correctAnswer) {
+    item.className = 'red';
+  };
+
+  if (alreadyAnswered) {
+
+  }
 };
 
 const nextQuestion = () => {
-  // if the last quastion => init the result page 
-  if(quizData.currentQuestionIndex === (quizData.questions.length - 1)){
-    quizData.currentQuestionIndex = 0
-     initResultPage();
-  } else {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+
   initQuestionPage();
-}
 };
