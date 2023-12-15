@@ -44,3 +44,47 @@ button {
 .green {
   background-color: green;
 }
+.question-count{
+  background-color: antiquewhite;
+  padding: 10px;
+  border: 1px solid #000;
+}
+#count-down{
+  position: relative;
+  padding: 5px;
+  margin: 15px;
+  font-size: 50px;
+ border: 0px solid #000;
+ width: 60px;
+ height: 60px;
+ margin-left: calc(50% - 25px);
+ border-radius: 50%;
+ transition: .5s;
+ background: #fff;
+ color: #000;
+ animation: color 10s;
+ box-shadow: 1px 1px 20px red;
+ 
+}
+#count-down.pause {
+  animation-play-state: paused;
+}
+
+@keyframes color {
+  0%{
+    /* background: rgb(69, 241, 69); */
+    box-shadow: 1px 1px 20px rgb(69, 241, 69);
+  }
+  69%{
+    /* background: rgb(69, 241, 69); */
+    box-shadow: 1px 1px 20px rgb(69, 241, 69);
+  }
+  70% {
+   /* background: red; */
+   box-shadow: 1px 1px 20px red
+  }
+  100% {
+   /* background: red; */
+   box-shadow: 1px 1px 20px red
+  }
+}
