@@ -19,15 +19,14 @@ export const initQuestionPage = () => {
 
   const answersListElement = document.getElementById(ANSWERS_LIST_ID);
 
-  answersListElement.innerHTML = ''; // from old code
-  const answers = currentQuestion.answers; // from old code
+  answersListElement.innerHTML = '';
+  const answers = currentQuestion.answers;
 
-  // from old code
   for (const [option, answer] of Object.entries(answers)) {
     const answerElement = createAnswerElement(option, answer);
     answersListElement.appendChild(answerElement);
     answerElement.addEventListener('click', (e) => {
-      const selectedOption = e.target.innerText.split(': ')[0];
+      const selectedOption = e.target.innerText.split('. ')[0];
       selectAnswer(quizData.currentQuestionIndex, selectedOption);
     });
   };
@@ -36,7 +35,7 @@ export const initQuestionPage = () => {
   quizBtn.addEventListener('click', nextQuestion);
 };
 
-// USER CAN SELECT AN ANSWER PER QUESTION
+// USER CAN SELECT ONE ANSWER PER QUESTION
 const selectAnswer = (questionIndex, selectedOption) => {
   // updates selected answer in quizData. 'questionIndex' identifies the specific question in array
   quizData.questions[questionIndex].selected = selectedOption;
@@ -44,6 +43,7 @@ const selectAnswer = (questionIndex, selectedOption) => {
   // selects all <li> elements within '.answer-list' class. It then iterates over all li's and calls showCorrectAnswer function for each of them
   document.querySelectorAll(`.answer-list li`).forEach((item) => {
     showCorrectAnswer(item);
+    item.style.pointerEvents = 'none'; // prevents user to multiple options - https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/PointerEvent
   });
 };
 
@@ -52,21 +52,15 @@ const showCorrectAnswer = (item) => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex]; // retrieves current question by its index
   const correctAnswer = currentQuestion.correct;
   const selectedAnswer = currentQuestion.selected;
-  const choice = item.innerText.split(': ')[0]; // takes user's choice from item param & splits text into array of substrings then selects first element at index 0
-  let alreadyAnswered = false;
+  const choice = item.innerText.split('. ')[0]; // takes user's choice from item param & splits text into array of substrings then selects first element at index 0
 
   if (selectedAnswer != null && selectedAnswer.length > 0 && choice == correctAnswer) {
-    item.className = 'green'; 
-    alreadyAnswered = true;
+    item.className = 'correct'; 
   }
   
   if (selectedAnswer === choice && selectedAnswer !== correctAnswer) {
-    item.className = 'red';
+    item.className = 'incorrect';
   };
-
-  if (alreadyAnswered) {
-
-  }
 };
 
 const nextQuestion = () => {
