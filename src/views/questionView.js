@@ -12,7 +12,7 @@ export const createQuestionElement = (question) => {
   element.innerHTML = String.raw`
     <h1>${question}</h1>
 
-    <ul id="${ANSWERS_LIST_ID}">
+    <ul class="answer-list" id="${ANSWERS_LIST_ID}">
     </ul>
 
     <button id="${NEXT_QUESTION_BUTTON_ID}">
