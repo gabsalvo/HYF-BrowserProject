@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .centered {
   position: fixed;
   top: 50%;
@@ -20,11 +25,22 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  cursor: pointer;
   font-size: 1.5rem;
 }
 
-.selected {
-  background-color: #20b99b;
+button {
+  padding: 1em;
+  border-radius: 3%;
+  border: none;
+  background-color: #0789A9;
   color: #fff;
+  margin: 1em;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
 }
