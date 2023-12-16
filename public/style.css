@@ -17,7 +17,7 @@ body {
 }
 
 h1 {
-  margin: 1em;
+  margin: .8em;
   text-transform: uppercase;
 }
 
@@ -26,6 +26,7 @@ ul {
 }
 
 li {
+  margin: 0.3em;
   padding: .5em 0;
   box-shadow: 0 0 10px 0px #FFFFFF;
   border-radius: 25px;
@@ -39,7 +40,7 @@ li {
 }
 
 button {
-  font-size: 1em;
+  font-size: 1.1em;
   padding: 1em;
   margin: 1.5em;
   border-radius: 5%;
@@ -56,11 +57,11 @@ button {
 .correct {
   background-color: green;
 }
+
 .question-count{
-  /* background-color: antiquewhite; */
   padding: 10px;
-  /* border: 1px solid #000; */
 }
+
 #count-down{
   position: relative;
   padding: 5px;
@@ -80,6 +81,10 @@ button {
 
 #count-down.pause {
   animation-play-state: paused;
+}
+
+.score {
+  font-size: 1.5em;
 }
 
 .result-container{
