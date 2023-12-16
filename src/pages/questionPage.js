@@ -24,16 +24,18 @@ export const initQuestionPage = () => {
 
   const questionElement = createQuestionElement(currentQuestion.text);
   
-    // create a score element and add it to the question page
+  // create score element and add it to question page
   const score = createScoreElement(currentScore,topScore);
   questionElement.appendChild(score);
 
-    // init the count-down
-    countdown.startCountdown(seconds, () => {
-      // This callback is executed when the countdown reaches 0
-      countdown.stopCountdown();
-      showCorrectAnswerIfNoSelection();
+  // init count-down
+  countdown.startCountdown(seconds, () => {
+    // This callback is executed when the countdown reaches 0
+    countdown.stopCountdown();
+    document.querySelectorAll(`.answer-list li`).forEach((item) => {
+      showCorrectAnswer(item);
     });
+  });
 
   userInterface.appendChild(questionElement);
 
@@ -53,26 +55,31 @@ export const initQuestionPage = () => {
       // stop the animation
       stopAnimation();
       selectAnswer(quizData.currentQuestionIndex, selectedOption);
-      checkScore(selectedOption)
+      checkScore(selectedOption);
     }); 
   };
 
   const quizBtn = document.getElementById(NEXT_QUESTION_BUTTON_ID);
-  quizBtn.addEventListener('click', nextQuestion);
-  if(quizData.currentQuestionIndex === (quizData.questions.length - 1)){
-  quizBtn.innerHTML = `Show Result`;
-  };
+    quizBtn.addEventListener('click', nextQuestion);
+    if (quizData.currentQuestionIndex === (quizData.questions.length - 1)) {
+    quizBtn.innerHTML = `Show Result`;
+    };
 };
 
-// USER CAN SELECT ONE ANSWER PER QUESTION
-const selectAnswer = (questionIndex, selectedOption) => {
-  // updates selected answer in quizData. 'questionIndex' identifies the specific question in array
-  quizData.questions[questionIndex].selected = selectedOption;
+//USER CAN SELECT ONLY ONE ANSWER PER QUESTION
+const selectOnlyOneAnswer = () => {
   // selects all <li> elements within '.answer-list' class. It then iterates over all li's and calls showCorrectAnswer function for each of them
   document.querySelectorAll(`.answer-list li`).forEach((item) => {
     showCorrectAnswer(item);
     item.style.pointerEvents = 'none'; // prevents user to select multiple options - https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/PointerEvent
   });
+};
+
+// SELECTED ANSWER
+const selectAnswer = (questionIndex, selectedOption) => {
+  // updates selected answer in quizData. 'questionIndex' identifies the specific question in array
+  quizData.questions[questionIndex].selected = selectedOption;
+  selectOnlyOneAnswer();
 };
 
 // USER CAN SEE CORRECT ANSWER WHEN SELECTING WRONG ANSWER
@@ -82,27 +89,37 @@ const showCorrectAnswer = (item) => {
   const selectedAnswer = currentQuestion.selected;
   const choice = item.innerText.split('. ')[0]; // takes user's choice from item param & splits text into array of substrings then selects first element at index 0
 
-  if (selectedAnswer != null && selectedAnswer.length > 0 && choice == correctAnswer) {
+  if (choice == correctAnswer) {
     item.className = 'correct'; 
   };
   
   if (selectedAnswer === choice && selectedAnswer !== correctAnswer) {
     item.className = 'incorrect';
   };
+
+  // If user did not select an answer show correct answer
+  if (!selectedAnswer && choice === correctAnswer) {
+    item.className = 'correct'; 
+  };
 };
 
+// USER CAN LEARN CORRECT ANSWER WHEN CLICKING NEXT QUESTION
 const nextQuestion = () => {
-  // if the last question => init the result page 
-  if(quizData.currentQuestionIndex === (quizData.questions.length - 1)){
-    quizData.currentQuestionIndex = 0
+  countdown.stopCountdown(); // stops countdown when clicking 'next question'
+  selectOnlyOneAnswer();
+
+  // If it's last question, initialize result page
+  if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
+    quizData.currentQuestionIndex = 0;
     countdown.resetCountdown();
-     initResultPage(currentScore,topScore);
-  } else {
-    quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
-  
-    // when moving to the next question reset the timer 
-    countdown.resetCountdown();
-    initQuestionPage();
+    initResultPage(currentScore, topScore);
+
+  } else { // move to next question after brief delay
+    setTimeout(() => {
+      quizData.currentQuestionIndex++;
+      countdown.resetCountdown();
+      initQuestionPage();
+    }, 1500);
   };
 };
 
@@ -116,23 +133,10 @@ const checkScore = (selectedOption) => {
     if (scoreElement) {
       scoreElement.innerHTML = `${currentScore}/${topScore}`;
     }
-  }
+  };
 };
 
 const stopAnimation = ()=>{
   const counter = document.getElementById('count-down');
   counter.classList.toggle('pause');
-};
-
-const showCorrectAnswerIfNoSelection = () => {
-  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-  const selectedAnswer = currentQuestion.selected;
- 
-  if (!selectedAnswer) {
-    // If the user did not select an answer, automatically show the correct answer
-    currentQuestion.selected = currentQuestion.correct
-    document.querySelectorAll(`.answer-list li`).forEach((item) => {
-      showCorrectAnswer(item);
-    });
-  };
 };
