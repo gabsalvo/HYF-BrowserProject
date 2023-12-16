@@ -11,5 +11,7 @@ export const createResultPage = (currentscore,topScore) => {
     <h1>Congrats! You Have Answered: ${currentscore} Out Of ${topScore} Correct!</h1>
     <button class="btn btn-primary" id="${RESTART_BTN_ID}">Try Again</button>
   `;
+  
   return element;
 };
+

@@ -69,6 +69,39 @@ button {
 #count-down.pause {
   animation-play-state: paused;
 }
+.result-container{
+ 
+  background-color: #f1f1f1;
+  margin: 0px;
+  padding: 100px 300px;
+  box-shadow: 1px 1px 100px rgb(7, 239, 103);
+
+  height: 100%;
+  transition: 3s;
+  position: relative;
+  overflow: hidden;
+}
+.result-container::after{
+  content: 'Congrats';
+  height: 100px;
+  width: 100px;
+  background: linear-gradient(rgb(7, 239, 103),rgb(7, 239, 103),#fff) ;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 50px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 50%;
+  /* transform: skewY(3deg); */
+  /* animation: after 5s infinite; */
+  animation: bounce 1s infinite;
+ color: #fff;
+ box-shadow: 1px 5px 10px rgb(7, 239, 103);
+}
+
 
 @keyframes color {
   0%{
@@ -82,9 +115,55 @@ button {
   70% {
    /* background: red; */
    box-shadow: 1px 1px 20px red
+   
   }
   100% {
    /* background: red; */
    box-shadow: 1px 1px 20px red
   }
+}
+
+
+@keyframes after {
+  0%{
+   
+    top: 0;
+    left: 0;
+  }
+  25%{
+   
+   top: 0;
+   left: calc(100% - 100px);
+  }
+  50% {
+
+  left: calc(100% - 100px);
+  top: calc(100% - 100px);
+   
+  }
+  75% {
+  top: calc(100% - 100px);
+  left: 0;
+
+  }
+
+  100% {
+  
+  top: 0;
+  left: 0;
+  }
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(-10px) 
+  }
+  
+  50% {
+    transform: translateY(0px) 
+  }
+  100% {
+    transform: translateY(-10px) 
+  }
+
+
 }
