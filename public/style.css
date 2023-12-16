@@ -40,14 +40,34 @@ li {
 }
 
 button {
-  padding: 1em;
+  font-size: large;
+  padding: 0.8em;
   margin: 1.5em;
   border-radius: 5%;
   border: none;
-  background-color: #0789A9;
+  background: linear-gradient(45deg, #0789a9, #104451);
   color: #ffffff;
   text-transform: capitalize;
+}
+
+button:hover {
   cursor: pointer;
+  transform: scale(1.05);
+  animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .incorrect {
@@ -188,3 +208,4 @@ button {
   opacity: 1;
   transform: scale(1);
 }
+
