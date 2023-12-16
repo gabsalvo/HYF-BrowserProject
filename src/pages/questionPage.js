@@ -71,7 +71,7 @@ const selectAnswer = (questionIndex, selectedOption) => {
   // selects all <li> elements within '.answer-list' class. It then iterates over all li's and calls showCorrectAnswer function for each of them
   document.querySelectorAll(`.answer-list li`).forEach((item) => {
     showCorrectAnswer(item);
-    item.style.pointerEvents = 'none'; // prevents user to multiple options - https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/PointerEvent
+    item.style.pointerEvents = 'none'; // prevents user to select multiple options - https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/PointerEvent
   });
 };
 
@@ -84,7 +84,7 @@ const showCorrectAnswer = (item) => {
 
   if (selectedAnswer != null && selectedAnswer.length > 0 && choice == correctAnswer) {
     item.className = 'correct'; 
-  }
+  };
   
   if (selectedAnswer === choice && selectedAnswer !== correctAnswer) {
     item.className = 'incorrect';
@@ -98,12 +98,12 @@ const nextQuestion = () => {
     countdown.resetCountdown();
      initResultPage(currentScore,topScore);
   } else {
-  quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+    quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
   
-  // when moving to the next question reset the timer 
-  countdown.resetCountdown();
-  initQuestionPage();
-}
+    // when moving to the next question reset the timer 
+    countdown.resetCountdown();
+    initQuestionPage();
+  };
 };
 
 const checkScore = (selectedOption) => {
@@ -120,9 +120,10 @@ const checkScore = (selectedOption) => {
 };
 
 const stopAnimation = ()=>{
-const counter = document.getElementById('count-down');
-counter.classList.toggle('pause');
-}
+  const counter = document.getElementById('count-down');
+  counter.classList.toggle('pause');
+};
+
 const showCorrectAnswerIfNoSelection = () => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
   const selectedAnswer = currentQuestion.selected;
@@ -131,7 +132,7 @@ const showCorrectAnswerIfNoSelection = () => {
     // If the user did not select an answer, automatically show the correct answer
     currentQuestion.selected = currentQuestion.correct
     document.querySelectorAll(`.answer-list li`).forEach((item) => {
-      console.log(item)
       showCorrectAnswer(item);
-    });}
+    });
+  };
 };

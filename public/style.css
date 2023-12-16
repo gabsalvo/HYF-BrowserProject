@@ -10,7 +10,7 @@ body {
   min-height: 100vh;
   background: rgb(2,0,36);
   background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(0,0,101,1) 33%);
-  font-size: 16px;
+  font-size: 14px;
   font-family: sans-serif;
   color: #ffffff;
   text-align: center;
@@ -35,12 +35,10 @@ li {
 .answer-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 button {
-  font-size: 1.1em;
   padding: 1em;
   margin: 1.5em;
   border-radius: 5%;
@@ -74,7 +72,7 @@ button {
   border-radius: 50%;
   transition: .5s;
   background: #fff;
-  color: #000;
+  color: rgb(2,0,36);
   animation: color 10s;
   box-shadow: 1px 1px 20px red;
 }
@@ -88,24 +86,21 @@ button {
 }
 
 .result-container{
-  background-color: #f1f1f1;
-  margin: 0px;
-  padding: 100px 300px;
-  box-shadow: 1px 1px 100px rgb(7, 239, 103);
   height: 100%;
   transition: 3s;
-  position: relative;
-  overflow: hidden;
 }
 
 .result-container::after{
-  content: 'Congrats';
-  height: 100px;
-  width: 100px;
-  background: linear-gradient(rgb(7, 239, 103),rgb(7, 239, 103),#fff) ;
+  content: 'Congrats!';
+  font-size: 1.5em;
+  height: 150px;
+  width: 150px;
+  margin-top: 5em;
+  background-color: #B9DC6C;
+  box-shadow: 0 0 10px 0px #FFFFFF;
   position: absolute;
-  bottom: 0;
-  left: calc(50% - 50px);
+  top: 0;
+  left: calc(50% - 75px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,8 +108,7 @@ button {
   font-weight: bold;
   border-radius: 50%;
   animation: bounce 1s infinite;
-  color: #fff;
-  box-shadow: 1px 5px 10px rgb(7, 239, 103);
+  color: #000;
 }
 
 @keyframes color {
@@ -136,7 +130,6 @@ button {
    box-shadow: 1px 1px 20px red
   }
 }
-
 
 @keyframes after {
   0%{
@@ -167,6 +160,7 @@ button {
   left: 0;
   }
 }
+
 @keyframes bounce {
   0% {
     transform: translateY(-10px) 
