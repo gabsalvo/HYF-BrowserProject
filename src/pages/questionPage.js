@@ -10,7 +10,6 @@ import { initResultPage } from './resultPage.js';
 import { createScoreElement } from '../views/scoreView.js';
 import { CountdownTimer } from '../views/countDownView.js';
 
-
 const topScore = quizData.questions.length;
 let currentScore = 0
 let seconds = 10;
@@ -47,28 +46,22 @@ export const initQuestionPage = () => {
     const answerElement = createAnswerElement(option, answer);
     answersListElement.appendChild(answerElement);
 
-  
-
     answerElement.addEventListener('click', (e) => {
-      const selectedOption = e.target.innerText.split(': ')[0];
+      const selectedOption = e.target.innerText.split('. ')[0];
       // stop the timer on
       countdown.stopCountdown();
       // stop the animation
       stopAnimation();
       selectAnswer(quizData.currentQuestionIndex, selectedOption);
       checkScore(selectedOption)
-      
-     
-    });
-
-    
+    }); 
   };
 
   const quizBtn = document.getElementById(NEXT_QUESTION_BUTTON_ID);
   quizBtn.addEventListener('click', nextQuestion);
   if(quizData.currentQuestionIndex === (quizData.questions.length - 1)){
   quizBtn.innerHTML = `Show Result`;
-  }
+  };
 };
 
 // USER CAN SELECT ONE ANSWER PER QUESTION
@@ -99,7 +92,7 @@ const showCorrectAnswer = (item) => {
 };
 
 const nextQuestion = () => {
-  // if the last quastion => init the result page 
+  // if the last question => init the result page 
   if(quizData.currentQuestionIndex === (quizData.questions.length - 1)){
     quizData.currentQuestionIndex = 0
     countdown.resetCountdown();
