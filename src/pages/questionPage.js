@@ -17,6 +17,7 @@ let seconds = 10;
 const countdown = new CountdownTimer();
 
 export const initQuestionPage = () => {
+
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
@@ -29,7 +30,11 @@ export const initQuestionPage = () => {
   questionElement.appendChild(score);
 
     // init the count-down
-  countdown.startCountdown(seconds);
+    countdown.startCountdown(seconds, () => {
+      // This callback is executed when the countdown reaches 0
+      countdown.stopCountdown();
+      showCorrectAnswerIfNoSelection();
+    });
 
   userInterface.appendChild(questionElement);
 
@@ -131,3 +136,15 @@ const stopAnimation = ()=>{
 const counter = document.getElementById('count-down');
 counter.classList.toggle('pause');
 }
+const showCorrectAnswerIfNoSelection = () => {
+  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+  const selectedAnswer = currentQuestion.selected;
+ 
+  if (!selectedAnswer) {
+    // If the user did not select an answer, automatically show the correct answer
+    currentQuestion.selected = currentQuestion.correct
+    document.querySelectorAll(`.answer-list li`).forEach((item) => {
+      console.log(item)
+      showCorrectAnswer(item);
+    });}
+};

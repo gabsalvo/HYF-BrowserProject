@@ -3,8 +3,7 @@ export class CountdownTimer {
     constructor() {
       this.intervalId = null;
     }
-  
-    startCountdown(seconds) {
+    startCountdown(seconds, onTimeoutCallback) {
       this.updateCountdown(seconds);
   
       this.intervalId = setInterval(() => {
@@ -14,8 +13,10 @@ export class CountdownTimer {
   
         if (seconds === 0) {
           this.stopCountdown();
+          if (onTimeoutCallback) {
+            onTimeoutCallback();
+          }
           // Perform the action when the timer reaches zero
-          
         }
       }, 1000);
     }
