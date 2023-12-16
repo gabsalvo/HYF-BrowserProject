@@ -10,11 +10,11 @@ export const createQuestionElement = (question) => {
 
   // I use String.raw just to get fancy colors for the HTML in VS Code.
   element.innerHTML = String.raw`
-  <h1 class = 'question-count'>Question ${quizData.questions.length}:${quizData.currentQuestionIndex + 1}</h1>
-  
-   <div id='count-down'>10</div>
+  <div id='count-down'>10</div>
 
-    <h1>${question}</h1>
+  <h1 class = 'question-count'>Question ${quizData.currentQuestionIndex + 1} out of ${quizData.questions.length}</h1>
+
+  <h1>${question}</h1>
 
     <ul class="answer-list" id="${ANSWERS_LIST_ID}">
     </ul>
@@ -23,6 +23,5 @@ export const createQuestionElement = (question) => {
       Next question
     </button>
   `;
-
   return element;
 };
