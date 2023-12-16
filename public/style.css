@@ -30,6 +30,7 @@ li {
   padding: .5em 0;
   box-shadow: 0 0 10px 0px #FFFFFF;
   border-radius: 25px;
+  cursor: pointer;
 }
 
 .answer-list {
@@ -46,6 +47,7 @@ button {
   background-color: #0789A9;
   color: #ffffff;
   text-transform: capitalize;
+  cursor: pointer;
 }
 
 .incorrect {
@@ -123,7 +125,7 @@ button {
   70% {
    /* background: red; */
    box-shadow: 1px 1px 20px red
-   
+
   }
   100% {
    /* background: red; */
@@ -133,12 +135,12 @@ button {
 
 @keyframes after {
   0%{
-   
+
     top: 0;
     left: 0;
   }
   25%{
-   
+
    top: 0;
    left: calc(100% - 100px);
   }
@@ -146,7 +148,7 @@ button {
 
   left: calc(100% - 100px);
   top: calc(100% - 100px);
-   
+
   }
   75% {
   top: calc(100% - 100px);
@@ -155,7 +157,7 @@ button {
   }
 
   100% {
-  
+
   top: 0;
   left: 0;
   }
@@ -163,13 +165,26 @@ button {
 
 @keyframes bounce {
   0% {
-    transform: translateY(-10px) 
+    transform: translateY(-10px)
   }
-  
+
   50% {
-    transform: translateY(0px) 
+    transform: translateY(0px)
   }
   100% {
-    transform: translateY(-10px) 
+    transform: translateY(-10px)
   }
+}
+
+.question-container,
+.welcome-container {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.question-container.show,
+.welcome-container.show {
+  opacity: 1;
+  transform: scale(1);
 }
