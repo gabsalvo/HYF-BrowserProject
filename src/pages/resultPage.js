@@ -11,7 +11,21 @@ export const initResultPage = (currentscore,topScore) => {
 
   const restartBtn = document.getElementById(RESTART_BTN_ID);
   restartBtn.addEventListener('click', startQuiz);
+  // Update the message in .result-container::after dynamically
+  updateResultMessage(currentscore);
 };
+
+// Function to update the message in .result-container::after
+const updateResultMessage = (currentscore) => {
+  const resultContainer = document.querySelector('.result-container');
+
+  // Customize the message based on the user's score
+  const message = currentscore >= 5 ? 'Congrats!' : 'You Failed!';
+
+  // Update the content property dynamically
+  resultContainer.style.setProperty('--result-message', `'${message}'`);
+};
+
 
 const startQuiz = () => {
  localStorage.clear();
