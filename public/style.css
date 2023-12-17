@@ -33,6 +33,10 @@ li {
   cursor: pointer;
 }
 
+li:hover {
+  background-color: rgb(72 117 147 / 33%);
+}
+
 .answer-list {
   display: grid;
   grid-template-columns: repeat(2,350px);
@@ -56,6 +60,7 @@ button {
 
 button:hover {
   cursor: pointer;
+  background-color: transparent;
   transform: scale(1.05);
   animation: pulse 0.5s infinite;
 }
