@@ -7,6 +7,7 @@ import { quizData } from '../data.js';
  */
 export const createQuestionElement = (question) => {
   const element = document.createElement('div');
+  element.classList.add('question-container');
 
   // I use String.raw just to get fancy colors for the HTML in VS Code.
   element.innerHTML = String.raw`

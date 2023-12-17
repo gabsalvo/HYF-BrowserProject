@@ -23,7 +23,8 @@ export const initQuestionPage = () => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
   const questionElement = createQuestionElement(currentQuestion.text);
-  
+  questionElement.classList.add('show'); // add 'show' class
+
   // create score element and add it to question page
   const score = createScoreElement(currentScore,topScore);
   questionElement.appendChild(score);
@@ -56,7 +57,7 @@ export const initQuestionPage = () => {
       stopAnimation();
       selectAnswer(quizData.currentQuestionIndex, selectedOption);
       checkScore(selectedOption);
-    }); 
+    });
   };
 
   const quizBtn = document.getElementById(NEXT_QUESTION_BUTTON_ID);
@@ -90,16 +91,16 @@ const showCorrectAnswer = (item) => {
   const choice = item.innerText.split('. ')[0]; // takes user's choice from item param & splits text into array of substrings then selects first element at index 0
 
   if (choice == correctAnswer) {
-    item.className = 'correct'; 
+    item.className = 'correct';
   };
-  
+
   if (selectedAnswer === choice && selectedAnswer !== correctAnswer) {
     item.className = 'incorrect';
   };
 
   // If user did not select an answer show correct answer
   if (!selectedAnswer && choice === correctAnswer) {
-    item.className = 'correct'; 
+    item.className = 'correct';
   };
 };
 
@@ -107,6 +108,9 @@ const showCorrectAnswer = (item) => {
 const nextQuestion = () => {
   countdown.stopCountdown(); // stops countdown when clicking 'next question'
   selectOnlyOneAnswer();
+
+  const questionElement = document.querySelector('.question-container');
+  questionElement.classList.remove('show'); // Remove 'show' class
 
   // If it's last question, initialize result page
   if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
@@ -119,13 +123,13 @@ const nextQuestion = () => {
       quizData.currentQuestionIndex++;
       countdown.resetCountdown();
       initQuestionPage();
-    }, 1500);
+    }, 800);
   };
 };
 
 const checkScore = (selectedOption) => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-  
+
   // check if selected = correct and change the score
   if (selectedOption == currentQuestion.correct) {
     currentScore += 1;
