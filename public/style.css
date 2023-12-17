@@ -121,7 +121,7 @@ button:hover {
 }
 
 .result-container::after{
-  content: 'Congrats!';
+  content: var(--result-message, 'Congrats!'); /* Default to 'Congrats!' if --result-message is not set */
   font-size: 1.5em;
   height: 150px;
   width: 150px;
