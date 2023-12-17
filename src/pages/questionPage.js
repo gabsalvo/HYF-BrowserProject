@@ -13,7 +13,7 @@ import { CountdownTimer } from '../views/countDownView.js';
 
 const topScore = quizData.questions.length;
 let currentScore = 0
-let seconds = 10;
+let seconds = 15;
 const countdown = new CountdownTimer();
 
 export const initQuestionPage = () => {
@@ -46,6 +46,8 @@ export const initQuestionPage = () => {
       showCorrectAnswer(item);
         item.style.pointerEvents = 'none';
     });
+    const hintBtn = document.getElementById(HINT_BTN_ID);
+    hintBtn.style.pointerEvents ='none'
   });
 
   userInterface.appendChild(questionElement);
@@ -95,7 +97,7 @@ const selectOnlyOneAnswer = () => {
     const selectedAnswer = currentQuestion.selected;
     const answerList = document.querySelector('.answer-list');
     // if the user  has not selected yet and the options are 4 
-    if (!selectedAnswer && answerList.querySelectorAll('li').length == 4) {
+    if (!selectedAnswer && answerList.querySelectorAll('li').length == 4 ) {
       const wrongAnswerArray = [];
       // Find wrong answers and add them to the array
       answerList.querySelectorAll('li').forEach((answer) => {
@@ -126,6 +128,7 @@ const showCorrectAnswer = (item) => {
 
   if (choice == correctAnswer) {
     item.className = 'correct';
+    
   };
 
   if (selectedAnswer === choice && selectedAnswer !== correctAnswer) {
@@ -148,10 +151,13 @@ const nextQuestion = () => {
 
   // If it's last question, initialize result page
   if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
-    quizData.currentQuestionIndex = 0;
-    updateLocalStorage();
+    
+
     countdown.resetCountdown();
-    initResultPage(currentScore, topScore);
+    setTimeout(() => {
+      initResultPage(currentScore, topScore);
+    }, 800);
+    
 
   } else { // move to next question after brief delay
     setTimeout(() => {
@@ -169,6 +175,7 @@ const checkScore = (selectedOption) => {
   // check if selected = correct and change the score
   if (selectedOption == currentQuestion.correct) {
     currentScore += 1;
+    triggerConfetti();
     const scoreElement = document.querySelector('.score'); 
     if (scoreElement) {
       scoreElement.innerHTML = `Score: ${currentScore}/${topScore}`;
@@ -187,4 +194,16 @@ const updateLocalStorage = () => {
     currentScore: currentScore,
   };
   localStorage.setItem('quizData', JSON.stringify(dataToStore));
+};
+
+const triggerConfetti = () => {
+  // Configure confetti options
+  const confettiConfig = {
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 },
+  };
+
+  // Trigger the confetti effect
+  confetti(confettiConfig);
 };

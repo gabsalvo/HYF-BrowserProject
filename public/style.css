@@ -97,7 +97,7 @@ button:hover {
   transition: .5s;
   background: red;
   color: #fff;
-  animation: color 10s;
+  animation: color 15s;
   box-shadow: 1px 1px 20px red;
 }
 
@@ -146,11 +146,11 @@ button:hover {
     background: rgb(69, 241, 69);
     box-shadow: 1px 1px 20px rgb(69, 241, 69);
   }
-  69%{
+  79%{
     background: rgb(69, 241, 69);
     box-shadow: 1px 1px 20px rgb(69, 241, 69);
   }
-  70% {
+  80% {
    background: red;
    box-shadow: 1px 1px 20px red
 
