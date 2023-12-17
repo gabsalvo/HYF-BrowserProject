@@ -26,8 +26,8 @@ ul {
 }
 
 li {
-  margin: 0.3em;
-  padding: .5em 0;
+  margin: 0.5em;
+  padding: 0.5em 0 0.5em 1em;
   box-shadow: 0 0 10px 0px #FFFFFF;
   border-radius: 25px;
   cursor: pointer;
@@ -35,10 +35,11 @@ li {
 
 .answer-list {
   display: grid;
-  grid-template-columns: repeat(2,250px);
+  grid-template-columns: repeat(2,350px);
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
+  font-size: 1.3rem;
+  text-align: start;
 }
 
 button {
@@ -46,10 +47,11 @@ button {
   padding: 0.8em;
   margin: 1.5em;
   border-radius: 5%;
-  border: none;
-  background: linear-gradient(45deg, #0789a9, #104451);
+  background-color: rgb(72 117 147 / 33%);
   color: #ffffff;
   text-transform: capitalize;
+  border: 1px solid;
+  box-shadow: 0 0 10px 0px #FFFFFF;
 }
 
 button:hover {
@@ -106,12 +108,12 @@ button:hover {
 }
 
 .score {
-  font-size: 1.5em;
+  font-size: 2em;
   width: 150px;
   margin-left: calc(50% - 75px);
-  margin-top: 0;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
   border-radius: 5px;
-  background-color: #08819f;
   padding: 5px;
 }
 
