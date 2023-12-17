@@ -1,5 +1,6 @@
 import {
   ANSWERS_LIST_ID,
+  HINT_BTN_ID,
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
 } from '../constants.js';
@@ -16,7 +17,9 @@ let seconds = 10;
 const countdown = new CountdownTimer();
 
 export const initQuestionPage = () => {
-
+  // check if first question reset the score
+   quizData.currentQuestionIndex == 0 ? currentScore = 0 : currentScore;
+   
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
@@ -59,6 +62,8 @@ export const initQuestionPage = () => {
       checkScore(selectedOption);
     });
   };
+  const hintBtn = document.getElementById(HINT_BTN_ID);
+  hintBtn.addEventListener('click',hint);
 
   const quizBtn = document.getElementById(NEXT_QUESTION_BUTTON_ID);
     quizBtn.addEventListener('click', nextQuestion);
@@ -75,6 +80,26 @@ const selectOnlyOneAnswer = () => {
     item.style.pointerEvents = 'none'; // prevents user to select multiple options - https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/PointerEvent
   });
 };
+// hint function to illuminate 2 wrong answers
+  const hint = () => {
+    const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+    const selectedAnswer = currentQuestion.selected;
+    const answerList = document.querySelector('.answer-list');
+    // if the user  has not selected yet and the options are 4 
+    if (!selectedAnswer && answerList.querySelectorAll('li').length == 4) {
+      const wrongAnswerArray = [];
+      // Find wrong answers and add them to the array
+      answerList.querySelectorAll('li').forEach((answer) => {
+        if (answer.innerText.split('. ')[0] !== currentQuestion.correct) {
+          wrongAnswerArray.push(answer);
+        }
+      });
+       // Remove 2 wrong answers from the DOM
+      wrongAnswerArray[0].parentNode.removeChild(wrongAnswerArray[0])
+      wrongAnswerArray[1].parentNode.removeChild(wrongAnswerArray[1])
+    }
+  };
+
 
 // SELECTED ANSWER
 const selectAnswer = (questionIndex, selectedOption) => {
