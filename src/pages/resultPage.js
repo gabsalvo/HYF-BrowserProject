@@ -14,6 +14,6 @@ export const initResultPage = (currentscore,topScore) => {
 };
 
 const startQuiz = () => {
-
+ localStorage.clear();
   initQuestionPage();
 };

@@ -17,8 +17,14 @@ let seconds = 10;
 const countdown = new CountdownTimer();
 
 export const initQuestionPage = () => {
+  // Check local storage for saved data
+  const storedData = JSON.parse(localStorage.getItem('quizData')) || {};
+  // Set current question index and score from stored data or use defaults
+  quizData.currentQuestionIndex = storedData.currentQuestionIndex || 0;
+  currentScore = storedData.currentScore || 0;
+
   // check if first question reset the score
-   quizData.currentQuestionIndex == 0 ? currentScore = 0 : currentScore;
+  //  quizData.currentQuestionIndex == 0 ? currentScore = 0 : currentScore;
    
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
@@ -38,6 +44,7 @@ export const initQuestionPage = () => {
     countdown.stopCountdown();
     document.querySelectorAll(`.answer-list li`).forEach((item) => {
       showCorrectAnswer(item);
+        item.style.pointerEvents = 'none';
     });
   });
 
@@ -60,6 +67,8 @@ export const initQuestionPage = () => {
       stopAnimation();
       selectAnswer(quizData.currentQuestionIndex, selectedOption);
       checkScore(selectedOption);
+      // Update local storage after each question is answered
+      updateLocalStorage();
     });
   };
   const hintBtn = document.getElementById(HINT_BTN_ID);
@@ -140,12 +149,14 @@ const nextQuestion = () => {
   // If it's last question, initialize result page
   if (quizData.currentQuestionIndex === quizData.questions.length - 1) {
     quizData.currentQuestionIndex = 0;
+    updateLocalStorage();
     countdown.resetCountdown();
     initResultPage(currentScore, topScore);
 
   } else { // move to next question after brief delay
     setTimeout(() => {
       quizData.currentQuestionIndex++;
+      updateLocalStorage();
       countdown.resetCountdown();
       initQuestionPage();
     }, 800);
@@ -158,9 +169,9 @@ const checkScore = (selectedOption) => {
   // check if selected = correct and change the score
   if (selectedOption == currentQuestion.correct) {
     currentScore += 1;
-    const scoreElement = document.querySelector('.score'); // Use querySelector instead of getElementsByClassName
+    const scoreElement = document.querySelector('.score'); 
     if (scoreElement) {
-      scoreElement.innerHTML = `${currentScore}/${topScore}`;
+      scoreElement.innerHTML = `Score: ${currentScore}/${topScore}`;
     }
   };
 };
@@ -168,4 +179,12 @@ const checkScore = (selectedOption) => {
 const stopAnimation = ()=>{
   const counter = document.getElementById('count-down');
   counter.classList.toggle('pause');
+};
+const updateLocalStorage = () => {
+  // Save current question index and score to local storage
+  const dataToStore = {
+    currentQuestionIndex: quizData.currentQuestionIndex,
+    currentScore: currentScore,
+  };
+  localStorage.setItem('quizData', JSON.stringify(dataToStore));
 };

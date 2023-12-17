@@ -34,8 +34,10 @@ li {
 }
 
 .answer-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2,250px);
+  justify-content: center;
+  align-items: center;
   font-size: 1rem;
 }
 
@@ -93,8 +95,8 @@ button:hover {
   margin-left: calc(50% - 25px);
   border-radius: 50%;
   transition: .5s;
-  background: #fff;
-  color: rgb(2,0,36);
+  background: red;
+  color: #fff;
   animation: color 10s;
   box-shadow: 1px 1px 20px red;
 }
@@ -105,6 +107,12 @@ button:hover {
 
 .score {
   font-size: 1.5em;
+  width: 150px;
+  margin-left: calc(50% - 75px);
+  margin-top: 0;
+  border-radius: 5px;
+  background-color: #08819f;
+  padding: 5px;
 }
 
 .result-container{
@@ -135,20 +143,20 @@ button:hover {
 
 @keyframes color {
   0%{
-    /* background: rgb(69, 241, 69); */
+    background: rgb(69, 241, 69);
     box-shadow: 1px 1px 20px rgb(69, 241, 69);
   }
   69%{
-    /* background: rgb(69, 241, 69); */
+    background: rgb(69, 241, 69);
     box-shadow: 1px 1px 20px rgb(69, 241, 69);
   }
   70% {
-   /* background: red; */
+   background: red;
    box-shadow: 1px 1px 20px red
 
   }
   100% {
-   /* background: red; */
+   background: red;
    box-shadow: 1px 1px 20px red
   }
 }
@@ -209,3 +217,9 @@ button:hover {
   transform: scale(1);
 }
 
+@media only screen and (max-width: 700px) {
+ .answer-list{
+  grid-template-columns: repeat(1,250px);
+ }
+
+}
