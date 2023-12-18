@@ -80,7 +80,7 @@ button:hover {
 }
 
 .incorrect {
-  background-color: #ff6666;
+  background-color: #ff6666 !important;
 }
 
 .correct {

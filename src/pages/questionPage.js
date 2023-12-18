@@ -22,15 +22,15 @@ export const initQuestionPage = () => {
   // Set current question index and score from stored data or use defaults
   quizData.currentQuestionIndex = storedData.currentQuestionIndex || 0;
   currentScore = storedData.currentScore || 0;
+ 
 
-  // check if first question reset the score
-  //  quizData.currentQuestionIndex == 0 ? currentScore = 0 : currentScore;
+
    
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-
+ 
   const questionElement = createQuestionElement(currentQuestion.text);
   questionElement.classList.add('show'); // add 'show' class
 
@@ -42,6 +42,8 @@ export const initQuestionPage = () => {
   countdown.startCountdown(seconds, () => {
     // This callback is executed when the countdown reaches 0
     countdown.stopCountdown();
+    quizData.questions[quizData.currentQuestionIndex].selected = quizData.questions[quizData.currentQuestionIndex].correct
+    updateLocalStorage(); 
     document.querySelectorAll(`.answer-list li`).forEach((item) => {
       showCorrectAnswer(item);
         item.style.pointerEvents = 'none';
@@ -60,18 +62,34 @@ export const initQuestionPage = () => {
   for (const [option, answer] of Object.entries(answers)) {
     const answerElement = createAnswerElement(option, answer);
     answersListElement.appendChild(answerElement);
+    // check if rhe question was already answered 
+    quizData.questions[quizData.currentQuestionIndex].selected = storedData.selectAnswer || null ;
+    if(storedData.selectAnswer){
+    
+      countdown.stopCountdown();
+     // stop the animation
+    stopAnimation();
+      currentQuestion.selected = storedData.selectAnswer;
+      document.querySelectorAll(`.answer-list li`).forEach((item) => {
+        showCorrectAnswer(item);
+          item.style.pointerEvents = 'none';});
+          updateLocalStorage();
+     }else{
 
     answerElement.addEventListener('click', (e) => {
       const selectedOption = e.target.innerText.split('. ')[0];
       // stop the timer on
+      
       countdown.stopCountdown();
       // stop the animation
       stopAnimation();
       selectAnswer(quizData.currentQuestionIndex, selectedOption);
+    
       checkScore(selectedOption);
       // Update local storage after each question is answered
       updateLocalStorage();
     });
+  }
   };
   const hintBtn = document.getElementById(HINT_BTN_ID);
   hintBtn.addEventListener('click',hint);
@@ -185,13 +203,14 @@ const checkScore = (selectedOption) => {
 
 const stopAnimation = ()=>{
   const counter = document.getElementById('count-down');
-  counter.classList.toggle('pause');
+  counter.classList.add('pause');
 };
 const updateLocalStorage = () => {
   // Save current question index and score to local storage
   const dataToStore = {
     currentQuestionIndex: quizData.currentQuestionIndex,
     currentScore: currentScore,
+    selectAnswer: quizData.questions[quizData.currentQuestionIndex].selected
   };
   localStorage.setItem('quizData', JSON.stringify(dataToStore));
 };
