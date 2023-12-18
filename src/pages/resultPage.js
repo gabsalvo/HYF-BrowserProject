@@ -1,6 +1,7 @@
 import { USER_INTERFACE_ID, RESTART_BTN_ID } from '../constants.js';
 import { createResultPage } from '../views/resultView.js';
 import { initWelcomePage } from './welcomePage.js';
+import { quizData } from '../data.js';
 
 export const initResultPage = (currentscore,topScore) => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -58,9 +59,20 @@ const updateResultMessage = (currentscore) => {
 
 
 
+// const startQuiz = () => {
+//  localStorage.clear();
+//  initWelcomePage();
+// };
+
 const startQuiz = () => {
- localStorage.clear();
- initWelcomePage();
+  // Reset the quizData array
+  quizData.questions.forEach((question) => {
+    question.selected = null;
+  });
+
+  // Clear the local storage
+  localStorage.clear();
+
+  // Initialize the welcome page
+  initWelcomePage();
 };
-
-
