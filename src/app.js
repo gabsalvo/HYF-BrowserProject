@@ -12,8 +12,10 @@ const loadApp = () => {
     quizData.currentQuestionIndex = storedData.currentQuestionIndex;
 
     if (storedData.isQuizCompleted) {
-      // User had finished the quiz
-      initResultPage();
+      const currentScore = storedData.currentScore;
+      const topScore = quizData.questions.length;
+      initResultPage(currentScore, topScore);
+      
     } else if (storedData.currentQuestionIndex < quizData.questions.length) {
       // User was in the middle of the quiz
       initQuestionPage();
