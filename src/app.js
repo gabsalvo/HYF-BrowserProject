@@ -7,12 +7,8 @@ const loadApp = () => {
   initWelcomePage();
 };
 
-window.addEventListener('load', () => {
-  if (sessionStorage.getItem("isReload")) {
-    console.log("Page was reloaded");
-  } else {
-    sessionStorage.setItem("isReload", true);
-    console.log("Page loaded for the first time");
-    initWelcomePage();
-  }
+window.addEventListener('load', loadApp);
+window.addEventListener('beforeunload', (event) => {.
+  event.preventDefault();
+  event.returnValue = 'Are you sure you want to leave? Your progress might be lost.';
 });
