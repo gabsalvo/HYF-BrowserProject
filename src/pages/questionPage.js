@@ -207,11 +207,12 @@ const stopAnimation = ()=>{
   counter.classList.add('pause');
 };
 const updateLocalStorage = () => {
-  // Save current question index and score to local storage
+  const isQuizCompleted = quizData.currentQuestionIndex === quizData.questions.length - 1;
   const dataToStore = {
     currentQuestionIndex: quizData.currentQuestionIndex,
     currentScore: currentScore,
-    selectAnswer: quizData.questions[quizData.currentQuestionIndex].selected
+    selectAnswer: quizData.questions[quizData.currentQuestionIndex].selected,
+    isQuizCompleted : isQuizCompleted
   };
   localStorage.setItem('quizData', JSON.stringify(dataToStore));
 };
