@@ -2,8 +2,9 @@ import { quizData } from './data.js';
 import { initWelcomePage, initQuestionPage, initResultPage } from './pages';
 
 const loadApp = () => {
-  // Check if there's saved quiz data in localStorage
+  console.log("Loading app...");
   const storedData = JSON.parse(localStorage.getItem('quizData'));
+  console.log("Stored data:", storedData);
 
   if (storedData) {
     // Restore the saved quiz state
