@@ -1,5 +1,4 @@
 import { quizData } from './data.js';
-import { initWelcomePage, initQuestionPage, initResultPage } from './pages';
 import { initWelcomePage } from './pages/welcomePage.js';
 import { initQuestionPage } from './pages/questionPage.js';
 import { initResultPage } from './pages/resultPage.js';
