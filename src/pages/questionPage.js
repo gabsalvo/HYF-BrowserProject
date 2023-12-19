@@ -17,6 +17,7 @@ let seconds = 15;
 const countdown = new CountdownTimer();
 
 export const initQuestionPage = () => {
+   console.log("Initializing Question Page");
   // Check local storage for saved data
   const storedData = JSON.parse(localStorage.getItem('quizData')) || {};
   // Set current question index and score from stored data or use defaults
